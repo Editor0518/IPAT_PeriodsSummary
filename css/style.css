@@ -101,11 +101,13 @@ main { max-width: 1080px; margin: 0 auto; padding: 12px 20px 40px; }
 .bar-b.k { width: 3px; height: 14px; transform: translateX(-1px); border-radius: 1px; }
 .rtext { font-size: 13.5px; margin: 0 14px; color: #2b2f37; }
 .rtext b { font-weight: 800; }
-.hide-num .rtext b, .hide-num .bar-b.s b {
-  background: #e7e9ee; color: transparent; border-radius: 4px; cursor: pointer; padding: 0 2px;
-  transition: color .15s, background .15s;
+.hide-num .rtext b, .hide-num .bar-b.s b, .hide-num .rtext .cm {
+  background: #e7e9ee; color: transparent; border-color: #e7e9ee; border-radius: 4px; padding: 0 2px;
+  transition: color .12s, background .12s;
 }
-.hide-num .rtext b.show, .hide-num .bar-b.s b.show { background: transparent; color: inherit; }
+.hide-num .bar-b.s b { background: rgba(255,255,255,.35); }
+.hide-num .rtext b:hover, .hide-num .bar-b.s b:hover, .hide-num .rtext .cm:hover { background: #fff7d6; color: inherit; border-color: #cfd4dc; }
+.hide-num .bar-b.s b:hover { background: transparent; color: #fff; }
 .row.clickable { cursor: pointer; }
 .row.clickable:hover { background: #f8fafc; }
 .stat-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-left: 4px; vertical-align: 1px; }

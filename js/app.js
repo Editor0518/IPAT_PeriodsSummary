@@ -186,7 +186,7 @@
   function renderNotes(app) {
     const laws = state.law === "all" ? DATA.laws : DATA.laws.filter((l) => l.key === state.law);
     app.append(h("div", { class: "hint", style: "margin: 4px 0 0" },
-      "행을 누르면 그 행으로 바로 문제를 풀 수 있어요. ‘숫자 가리기’를 켜면 굵은 숫자를 눌러야 보입니다."));
+      "행을 누르면 그 행으로 바로 문제를 풀 수 있어요. ‘숫자 가리기’를 켜면 숫자가 가려지고, 마우스를 올린 동안만 보입니다."));
     laws.forEach((law) => {
       app.append(h("div", { class: "law-head" },
         h("h2", {}, law.title),
@@ -209,7 +209,6 @@
               h("div", { class: "rname", style: `color: ${d}` }, row.name, dot),
               h("div", { class: "rbody" }, barsEl(chart, row, g.cat), row.text ? textEl : null));
             r.addEventListener("click", (e) => {
-              if (e.target.tagName === "B" && state.hideNum) { e.target.classList.toggle("show"); return; }
               startSession([ITEMS.find((it) => it.id === id)], "mix", true);
             });
             rows.append(r);
