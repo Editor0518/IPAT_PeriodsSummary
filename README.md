@@ -1,4 +1,4 @@
-[https://share.google/bg7zj1PX7TnLWfvjx](https://editor0518.github.io/IPAT_PeriodsSummary/index.html)
+https://editor0518.github.io/IPAT_PeriodsSummary/index.html
 
 # IPAT 법정 기간 암기 퀴즈
 
