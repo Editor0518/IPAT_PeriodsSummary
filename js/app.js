@@ -186,7 +186,7 @@
   function renderNotes(app) {
     const laws = state.law === "all" ? DATA.laws : DATA.laws.filter((l) => l.key === state.law);
     app.append(h("div", { class: "hint", style: "margin: 4px 0 0" },
-      "행을 누르면 그 행으로 바로 문제를 풀 수 있어요. ‘숫자 가리기’를 켜면 굵은 숫자를 눌러야 보입니다."));
+      "행을 누르면 그 행으로 바로 문제를 풀 수 있어요. ‘숫자 가리기’를 켜면 숫자가 가려지고, 마우스를 올린 동안만 보입니다."));
     laws.forEach((law) => {
       app.append(h("div", { class: "law-head" },
         h("h2", {}, law.title),
@@ -209,7 +209,6 @@
               h("div", { class: "rname", style: `color: ${d}` }, row.name, dot),
               h("div", { class: "rbody" }, barsEl(chart, row, g.cat), row.text ? textEl : null));
             r.addEventListener("click", (e) => {
-              if (e.target.tagName === "B" && state.hideNum) { e.target.classList.toggle("show"); return; }
               startSession([ITEMS.find((it) => it.id === id)], "mix", true);
             });
             rows.append(r);
@@ -347,6 +346,7 @@
     전: ["1년 전", "2년 전", "6개월 전", "3개월 전"],
     복합: ["1년 2개월", "1년 3개월", "1년 4개월", "1년 6개월", "1년 8개월", "2년 6개월", "2년 7개월", "2년 8개월"],
     수: ["12", "16", "18", "19", "20", "22", "24", "28", "30", "31", "36"],
+    말: ["지체 없이", "7일 안", "14일 안", "1개월 안"],
   };
   function unitOf(v) {
     if (/전$/.test(v)) return "전";
@@ -355,7 +355,7 @@
     if (/개월$/.test(v)) return "개월";
     if (/일$/.test(v)) return "일";
     if (/년$/.test(v)) return "년";
-    return null;
+    return "말";
   }
   function magnitude(v) {
     let m = 0;
