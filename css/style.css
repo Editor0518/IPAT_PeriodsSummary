@@ -87,7 +87,7 @@ main { max-width: 1080px; margin: 0 auto; padding: 12px 20px 40px; }
 .ms.t i { border-color: var(--faint); }
 .ms span { font-size: 11px; font-weight: 700; line-height: 1.15; text-align: center; margin-top: 3px; white-space: nowrap; }
 .grp { border-top: 1px solid var(--line); display: grid; grid-template-columns: 92px 1fr; }
-.grp-label { font-size: 13px; font-weight: 800; padding: 8px 6px; display: flex; align-items: center; justify-content: center; text-align: center; border-radius: 6px; margin: 3px 4px 3px 0; }
+.grp-label { word-break: keep-all; font-size: 13px; font-weight: 800; padding: 8px 6px; display: flex; align-items: center; justify-content: center; text-align: center; border-radius: 6px; margin: 3px 4px 3px 0; }
 .grp-rows .row { grid-template-columns: 126px 1fr; }
 .row { padding: 5px 0; border-bottom: 1px dashed #eef0f3; }
 .row:last-child { border-bottom: 0; }
