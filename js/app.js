@@ -97,7 +97,7 @@
       case "o": return `background: radial-gradient(${c} 1.3px, transparent 1.7px) 0 0 / 6px 6px, ${l}; border: 1.5px solid ${c}`;
       case "l": return `background: ${l}; border: 1.5px solid ${c}`;
       case "d": return `background: transparent; border: 1.5px dashed ${c}`;
-      case "g": return `background: #eef0f3; border: 1px solid #c9ced6`;
+      case "g": return `background: ${l}; border: 1.5px solid ${c}; color: ${col(cat)[1]}`;
       case "s": return `background: ${c}`;
       case "p": return `border: 2.5px solid ${c}`;
       case "k": return `background: ${c}`;
@@ -139,7 +139,7 @@
     row.bars.forEach((b) => {
       const left = fracOf(chart, b.s), right = fracOf(chart, b.e);
       const st = `left: ${pct(left)}; ${b.k === "p" || b.k === "k" ? "" : `width: calc(${pct(right - left)});`} ${barCss(b.k, cat)}`;
-      tr.append(h("div", { class: "bar-b " + b.k, style: st, html: b.k === "s" && b.t ? richText(b.t) : "" }));
+      tr.append(h("div", { class: "bar-b " + b.k, style: st, html: (b.k === "s" || b.k === "g") && b.t ? richText(b.t) : "" }));
     });
     return tr;
   }
