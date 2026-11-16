@@ -154,24 +154,24 @@
   const state = { law: "all", mode: "notes", onlyWrong: false, hideNum: false, count: 10, session: null };
   const lawList = [{ key: "all", title: "전체" }, ...DATA.laws.map((l) => ({ key: l.key, title: l.title }))];
   const modeList = [
-    { key: "notes", label: "정리 노트" },
-    { key: "choice", label: TYPES.choice.label },
-    { key: "write", label: TYPES.write.label },
-    { key: "draw", label: TYPES.draw.label },
-    { key: "mix", label: "섞어서" },
+    { key: "notes", label: "정리 노트", ic: "📖" },
+    { key: "choice", label: TYPES.choice.label, ic: "☑" },
+    { key: "write", label: TYPES.write.label, ic: "✎" },
+    { key: "draw", label: TYPES.draw.label, ic: "▭" },
+    { key: "mix", label: "섞어서", ic: "🔀" },
   ];
 
   function renderTabs() {
     const lt = $("#lawTabs");
     lt.replaceChildren(...lawList.map((l) => h("button", {
-      class: state.law === l.key ? "on" : "",
+      class: state.law === l.key ? "on" : "", role: "tab", "aria-selected": state.law === l.key ? "true" : "false",
       onclick: () => { state.law = l.key; state.session = null; render(); },
     }, l.title)));
     const mt = $("#modeTabs");
     mt.replaceChildren(...modeList.map((m) => h("button", {
       class: state.mode === m.key ? "on" : "",
       onclick: () => { state.mode = m.key; state.session = null; render(); },
-    }, m.label)));
+    }, h("span", { class: "ic", "aria-hidden": "true" }, m.ic), m.label)));
     $("#onlyWrong").checked = state.onlyWrong;
   }
   function renderScore() {
