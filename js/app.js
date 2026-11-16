@@ -54,7 +54,7 @@
   });
 
   function pickMainBar(bars) {
-    const prio = { h: 6, s: 5, o: 4, l: 3, d: 2, g: 1 };
+    const prio = { h: 6, s: 5, o: 4, l: 3, g: 1 }; // 점선(d)은 "더 긴 경우"라 그리기 정답으로 쓰지 않음
     let best = null;
     for (const b of bars) {
       if (!(b.k in prio) || b.e - b.s < 0.05) continue;
