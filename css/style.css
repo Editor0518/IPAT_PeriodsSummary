@@ -36,14 +36,31 @@ h1 { margin: 2px 0 0; font-size: 28px; font-weight: 800; letter-spacing: -0.03em
   max-width: 1080px; margin: 0 auto; padding: 6px 20px;
   display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
 }
-.seg { display: flex; gap: 6px; flex-wrap: wrap; }
-.seg button {
-  border: 1px solid var(--line); background: var(--card); border-radius: 999px;
-  padding: 7px 14px; font-size: 14px; font-weight: 600; color: var(--sub);
+.step { font-size: 12px; font-weight: 800; color: var(--faint); white-space: nowrap; min-width: 64px; }
+
+/* ① 법 고르기: 밑줄 탭 (책갈피처럼 페이지를 고르는 느낌) */
+.law-bar { padding-top: 10px; padding-bottom: 0; align-items: flex-end; }
+.law-bar .step { padding-bottom: 10px; }
+.tabs { display: flex; gap: 2px; flex: 1; border-bottom: 2px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tabs button {
+  border: 0; background: none; padding: 9px 12px 8px; margin-bottom: -2px; white-space: nowrap;
+  font-size: 15px; font-weight: 600; color: var(--sub); border-bottom: 3px solid transparent;
 }
-.seg button:hover { border-color: #c6cbd3; color: var(--ink); }
-.seg button.on { background: var(--ink); border-color: var(--ink); color: #fff; }
-.seg.modes button.on { background: #2563eb; border-color: #2563eb; }
+.tabs button:hover { color: var(--ink); background: #eef0f3; border-radius: 6px 6px 0 0; }
+.tabs button.on { color: var(--ink); font-weight: 800; border-bottom-color: var(--ink); }
+
+/* ② 공부 방법: 하나로 붙은 스위치 (하나만 켜지는 모드 전환) */
+.mode-bar { padding-top: 12px; }
+.segctl { display: inline-flex; flex-wrap: wrap; background: #e6e9ee; border-radius: 10px; padding: 3px; gap: 2px; }
+.segctl button {
+  border: 0; background: transparent; border-radius: 8px; padding: 7px 14px;
+  font-size: 13.5px; font-weight: 700; color: var(--sub); display: inline-flex; align-items: center; gap: 6px;
+}
+.segctl button .ic { font-size: 14px; line-height: 1; opacity: .8; }
+.segctl button:hover { color: var(--ink); background: rgba(255,255,255,.55); }
+.segctl button.on { background: #fff; color: #1d4ed8; box-shadow: 0 1px 3px rgba(16,24,40,.15); }
+.segctl button.on .ic { opacity: 1; }
 .chk { font-size: 13px; color: var(--sub); display: flex; align-items: center; gap: 5px; user-select: none; }
 
 main { max-width: 1080px; margin: 0 auto; padding: 12px 20px 40px; }
