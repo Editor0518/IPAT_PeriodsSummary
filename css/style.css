@@ -115,6 +115,7 @@ main { max-width: 1080px; margin: 0 auto; padding: 12px 20px 40px; }
 .bar-b { position: absolute; top: 1px; height: 14px; border-radius: 3px; }
 .bar-b.s { color: #fff; font-size: 11px; font-weight: 700; padding: 0 6px; display: flex; align-items: center; white-space: nowrap; overflow: hidden; }
 .bar-b.p { width: 12px; height: 12px; top: 2px; border-radius: 50%; transform: translateX(-6px); background: #fff; }
+.bar-b.g { font-size: 10.5px; font-weight: 700; padding: 0 6px; display: flex; align-items: center; white-space: nowrap; overflow: hidden; }
 .bar-b.k { width: 3px; height: 14px; transform: translateX(-1px); border-radius: 1px; }
 .rtext { font-size: 13.5px; margin: 0 14px; color: #2b2f37; }
 .rtext b { font-weight: 800; }
