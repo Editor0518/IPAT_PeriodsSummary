@@ -123,11 +123,15 @@
   }
   const pct = (x) => (x * 100).toFixed(3) + "%";
 
-  function axisEl(chart, short) {
-    const ax = h("div", { class: "axis" }, h("div", { class: "ln" }));
+  // 사건 간격이 좁은 축. 좁은 화면(CSS)에서는 홀수 번째 이름을 한 줄 아래로 내려 겹치지 않게 한다.
+  const isDense = (chart) => chart.pos.some((p, i) => i > 0 && p - chart.pos[i - 1] < 0.15);
+  // withShort: 정리 노트용. 짧은 이름(.alt)을 함께 넣어 두고, 좁은 화면에서만 CSS로 바꿔 보여 준다.
+  function axisEl(chart, short, withShort) {
+    const ax = h("div", { class: "axis" + (isDense(chart) ? " dense" : "") }, h("div", { class: "ln" }));
     chart.ms.forEach((m, i) => {
-      ax.append(h("div", { class: "ms " + (m.style || ""), style: `left: ${pct(chart.pos[i])}` },
-        h("i"), h("span", { html: (short ? m.short : m.label).replace(" (", "<br>(").replace("우리나라 ", "우리나라<br>").replace("존속기간 ", "존속기간<br>") })));
+      ax.append(h("div", { class: "ms " + (m.style || "") + (i % 2 ? " lo" : ""), style: `left: ${pct(chart.pos[i])}` },
+        h("i"), h("span", { class: "full", html: (short ? m.short : m.label).replace(" (", "<br>(").replace("우리나라 ", "우리나라<br>").replace("존속기간 ", "존속기간<br>") }),
+        withShort ? h("span", { class: "alt" }, m.short) : null));
     });
     return ax;
   }
@@ -183,10 +187,13 @@
   }
 
   // ───────────────────────── 정리 노트 보기 ─────────────────────────
+  // 마우스 없이 터치만 되는 기기: 가린 숫자를 눌러서 보이게 한다 (마우스 기기는 그대로 올려서 보기).
+  const TOUCH = !!(window.matchMedia && window.matchMedia("(hover: none)").matches);
   function renderNotes(app) {
     const laws = state.law === "all" ? DATA.laws : DATA.laws.filter((l) => l.key === state.law);
     app.append(h("div", { class: "hint", style: "margin: 4px 0 0" },
-      "행을 누르면 그 행으로 바로 문제를 풀 수 있어요. ‘숫자 가리기’를 켜면 숫자가 가려지고, 마우스를 올린 동안만 보입니다."));
+      "행을 누르면 그 행으로 바로 문제를 풀 수 있어요. ‘숫자 가리기’를 켜면 숫자가 가려지고, " +
+      (TOUCH ? "가린 칸을 누르면 보입니다." : "마우스를 올린 동안만 보입니다.")));
     laws.forEach((law) => {
       app.append(h("div", { class: "law-head" },
         h("h2", {}, law.title),
@@ -195,7 +202,10 @@
             state.hideNum ? "숫자 보이기" : "숫자 가리기"))));
       law.charts.forEach((chart, ci) => {
         const grid = h("div", { class: "grid" + (state.hideNum ? " hide-num" : "") });
-        grid.append(h("div", { class: "axis-row" }, h("div", { class: "corner" }, chart.corner || "분류 · 제도 ↓ · 사건 →"), axisEl(chart, false)));
+        const corner = chart.corner || "분류 · 제도 ↓ · 사건 →";
+        // .cap: 좁은 화면에서만 보이는 축 설명 (넓은 화면은 왼쪽 위 .corner)
+        grid.append(h("div", { class: "cap" }, "가로축: " + corner.split("·").pop().replace("→", "").trim() + " →"));
+        grid.append(h("div", { class: "axis-row" }, h("div", { class: "corner" }, corner), axisEl(chart, false, true)));
         chart.groups.forEach((g, gi) => {
           const [c, d, l] = col(g.cat);
           const rows = h("div", { class: "grp-rows" });
@@ -209,6 +219,10 @@
               h("div", { class: "rname", style: `color: ${d}` }, row.name, dot),
               h("div", { class: "rbody" }, barsEl(chart, row, g.cat), row.text ? textEl : null));
             r.addEventListener("click", (e) => {
+              if (TOUCH && state.hideNum) {
+                const hidden = e.target.closest(".rtext b, .rtext .cm, .bar-b.s b");
+                if (hidden) { hidden.classList.toggle("peek"); return; }
+              }
               startSession([ITEMS.find((it) => it.id === id)], "mix", true);
             });
             rows.append(r);
